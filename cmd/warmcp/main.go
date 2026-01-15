@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"warmcp/pkg/common"
 	"warmcp/pkg/taskwarrior"
 	"warmcp/pkg/timewarrior"
 
@@ -13,10 +14,13 @@ func main() {
 		"warmcp",
 		"1.0.0",
 		server.WithToolCapabilities(true),
+		server.WithPromptCapabilities(true),
+		server.WithResourceCapabilities(true, false),
 	)
 
 	taskwarrior.RegisterHandlers(s)
 	timewarrior.RegisterHandlers(s)
+	common.RegisterMCPFeatures(s)
 
 	fmt.Println("warmcp server starting on stdio...")
 	if err := server.ServeStdio(s); err != nil {

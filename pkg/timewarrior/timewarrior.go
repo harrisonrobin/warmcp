@@ -2,6 +2,7 @@ package timewarrior
 
 import (
 	"context"
+	"fmt"
 	"strings"
 	"warmcp/pkg/common"
 
@@ -10,7 +11,10 @@ import (
 )
 
 func runTimew(args ...string) (string, error) {
-	return common.RunCommand("timew", nil, args...)
+	env := []string{
+		fmt.Sprintf("TIMEW_CONFIG=%s", common.GetTimewConfigPath()),
+	}
+	return common.RunCommand("timew", env, nil, args...)
 }
 
 func RegisterHandlers(s *server.MCPServer) {

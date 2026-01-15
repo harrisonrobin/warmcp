@@ -11,13 +11,15 @@ import (
 
 type MockRunner struct {
 	LastCmd  string
+	LastEnv  []string
 	LastArgs []string
 	Output   string
 	Err      error
 }
 
-func (m *MockRunner) Run(name string, baseArgs []string, args ...string) (string, error) {
+func (m *MockRunner) Run(name string, env []string, baseArgs []string, args ...string) (string, error) {
 	m.LastCmd = name
+	m.LastEnv = env
 	m.LastArgs = append(baseArgs, args...)
 	return m.Output, m.Err
 }
